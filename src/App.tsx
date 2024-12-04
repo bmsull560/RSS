@@ -1,14 +1,20 @@
 import { Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 import Home from "./components/home";
-import routes from "tempo-routes";
+import { ThemeProvider } from "./components/theme-provider";
 
 function App() {
+  const routes = useRoutes([
+    {
+      path: "/",
+      element: <Home />,
+    },
+  ]);
+
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <Home />
-      {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
-    </Suspense>
+    <ThemeProvider defaultTheme="system" storageKey="rss-reader-theme">
+      <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
+    </ThemeProvider>
   );
 }
 

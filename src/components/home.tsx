@@ -80,7 +80,9 @@ const fetchData = async () => {
 
 function Home() {
   const [selectedFeedId, setSelectedFeedId] = useState("");
-  const [selectedArticleId, setSelectedArticleId] = useState("");
+  const [selectedArticleId, setSelectedArticleId] = useState(
+    demoArticles[0].id,
+  );
   const [articles] = useState<Article[]>(demoArticles);
 
   const selectedArticle = articles.find(
@@ -101,24 +103,47 @@ function Home() {
   };
 
   const handleStar = () => {
-    // Implement star logic
+    if (selectedArticle) {
+      // Update the starred status of the selected article
+      const updatedArticles = articles.map((article) =>
+        article.id === selectedArticle.id
+          ? { ...article, isStarred: !article.isStarred }
+          : article,
+      );
+      // You would typically update the state here
+      console.log("Starred article:", selectedArticle.id);
+    }
   };
 
   const handleShare = () => {
-    // Implement share logic
+    if (selectedArticle) {
+      // Implement share functionality
+      console.log("Sharing article:", selectedArticle.id);
+    }
   };
 
   const handleMarkRead = () => {
-    // Implement mark as read logic
+    if (selectedArticle) {
+      // Update the read status of the selected article
+      const updatedArticles = articles.map((article) =>
+        article.id === selectedArticle.id
+          ? { ...article, isRead: !article.isRead, isUnread: false }
+          : article,
+      );
+      // You would typically update the state here
+      console.log("Marked article as read:", selectedArticle.id);
+    }
   };
 
   const handleSourceClick = () => {
-    // Implement source click logic
+    if (selectedArticle?.sourceUrl) {
+      window.open(selectedArticle.sourceUrl, "_blank");
+    }
   };
 
   return (
     <div className="h-screen bg-background">
-      <ResizablePanelGroup direction="horizontal" className="h-full">
+      <ResizablePanelGroup direction="horizontal" className="h-full rounded-lg">
         <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
           <Sidebar
             selectedFeedId={selectedFeedId}
