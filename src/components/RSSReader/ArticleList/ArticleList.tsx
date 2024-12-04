@@ -88,7 +88,7 @@ const ArticleList = ({
     });
 
   return (
-    <div className="w-[400px] h-[982px] border-r bg-background flex flex-col">
+    <div className="h-[982px] border-r bg-background flex flex-col overflow-hidden">
       <ListControls
         searchQuery={searchQuery}
         sortBy={sortBy}
@@ -104,19 +104,26 @@ const ArticleList = ({
       />
       <ScrollArea className="flex-1">
         <div className="p-2 space-y-2">
-          {filteredArticles.map((article) => (
-            <ArticleCard
-              key={article.id}
-              title={article.title}
-              excerpt={article.excerpt}
-              date={article.date}
-              isUnread={article.isUnread}
-              source={article.source}
-              thumbnailUrl={article.thumbnailUrl}
-              isSelected={article.id === selectedArticleId}
-              onClick={() => onArticleSelect(article.id)}
-            />
-          ))}
+          {filteredArticles.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <p>No articles found</p>
+              <p className="text-sm">Try adjusting your filters</p>
+            </div>
+          ) : (
+            filteredArticles.map((article) => (
+              <ArticleCard
+                key={article.id}
+                title={article.title}
+                excerpt={article.excerpt}
+                date={article.date}
+                isUnread={article.isUnread}
+                source={article.source}
+                thumbnailUrl={article.thumbnailUrl}
+                isSelected={article.id === selectedArticleId}
+                onClick={() => onArticleSelect(article.id)}
+              />
+            ))
+          )}
         </div>
       </ScrollArea>
     </div>
